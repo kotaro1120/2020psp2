@@ -50,10 +50,10 @@ $$u^2=\dfrac{1}{N-1}\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)^2=\dfrac{N}{N-1}s^2
 ```
 input the filename of sample:../sample/heights_male.csv
 the filename of sample: ../sample/heights_male.csv
-sample mean：
-sample variance：
-population mean (estimated)：
-population variance (estimated)：
+sample mean=173.888750
+sample variance=-3612.652039
+population mean=173.888750, pm=-1.#IND00
+population variance=-4128.745187
 ```
 
 ## 修正履歴
