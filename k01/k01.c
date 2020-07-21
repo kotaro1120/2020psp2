@@ -3,13 +3,13 @@
 #include <string.h>
 #include <math.h>
 
-extern double ave_online(int i, double val, double ave2);
-extern double var_online(int i, double val, double save, double ave3);
+extern double ave_online(int n, double val, double ave2);
+extern double var_online(int n, double val, double ave3, double save);
 
 int main(void)
 {
-    int i=0;
-    double val, ave=0, pm, samplemean, samplevariance, populationmean, populationvariance, save=0, ave3=0;
+    int n=0;
+    double val, ave=0, save=0, ave3=0, pm, samplemean, samplevariance, populationmean, populationvariance;
     char fname[FILENAME_MAX];
     char buf[256];
     FILE* fp;
@@ -27,17 +27,17 @@ int main(void)
 
     while(fgets(buf,sizeof(buf),fp) != NULL){
         sscanf(buf,"%lf",&val);
-        i++;
-        ave=ave_online(i, val, ave);
-        samplevariance=var_online(i, val, save, ave3);
-        save=((i-1)*save+val*val)/i;
-        ave3=((i-1)*ave3+val)/i;
+        n++;
+        ave=ave_online(n, val, ave);
+        samplevariance=var_online(n, val, save, ave3);
+        save=((n-1)*save+val*val)/n;
+        ave3=((n-1)*ave3+val)/n;
         samplemean=ave;
      }
 
-populationvariance=i*samplevariance/(i-1);
+populationvariance=n*samplevariance/(n-1);
 populationmean=samplemean;
-pm=pow(populationvariance/i,0.5);
+pm=pow(populationvariance/n,0.5);
 
     if(fclose(fp) == EOF){
         fputs("file close error\n",stderr);
@@ -54,13 +54,13 @@ printf("population variance=%1f\n", populationvariance);
 
 }
 
-double ave_online(int i, double val, double ave2)
+double ave_online(int n, double val, double ave2)
 {
-    ave2=((i-1)*ave2+val)/i;
+    ave2=((n-1)*ave2+val)/n;
     return ave2;
 }
 
-double var_online(int i, double val, double save, double ave3)
+double var_online(int n, double val, double save, double ave3)
 {
-    return((i-1)*save+val)/i-pow((((i-1)*ave3+val)/i),2);
+    return((n-1)*save+val)/n-pow((((n-1)*ave3+val)/n),2);
 }
