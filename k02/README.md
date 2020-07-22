@@ -21,12 +21,20 @@ aa83988848 薗田光太郎
 
 ## ソースコードの説明
 
+各県の平均と標準偏差を設定
+
+A県の平均と分散を用いて標準化する
+
+B県の平均と分散を用いて標準化する
+
+出現確率をだす
+
+その出現確率を相乗する
 ## 入出力結果
 
-```
-Likelihood for A：
-Likelihood for B：
-```
+gcc.exe: error: k02.c: No such file or directory
+gcc.exe: fatal error: no input files
+compilation terminated.
 
 ## 修正履歴
 
