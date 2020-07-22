@@ -67,6 +67,7 @@ int main(int argc, char* argv[])
 
 ## ソースコードの説明
 
+num_dummyの数までデータを捏造し、関数で標準化されている値をz変換してデータを捏造する
 ## 入出力結果
 
 以下は例です． コンパイルするときに`-DCONST_SEED`をつけるとこうなります．
@@ -86,7 +87,9 @@ Num of dummy data: 5
 
 コンパイル時に`-DCONST_SEED`をつけない場合を以下に示す．
 
-
+gcc.exe: error: k03.c: No such file or directory
+gcc.exe: fatal error: no input files
+compilation terminated.
 
 ## 修正履歴
 

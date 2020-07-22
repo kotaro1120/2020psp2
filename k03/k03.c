@@ -17,23 +17,26 @@ int main(int argc, char* argv[])
     int num_dummy;
     double mu;
     double sigma;
-    int i;
+    int a;
     double dummy;
 
 
-
-
-
     printf("============================================\n");
+    scanf(argv[1], "%lf", &mu);
+    
     printf("template mean: %4.1lf\n",mu);
+    scanf(argv{2}, "%lf", &sigma);
+    
     printf("template standard deviation: %3.2lf\n",sigma);
+    scanf(argv[3], "%d", &num_dummy);
+    
     printf("Num of dummy data: %d\n",num_dummy);
     printf("============================================\n");
 
     srand(RAND_SEED);
-    for(  ){
+    for(a=1; a<=num_dummy; a++){
         /* r_stdnormを使って，1人のデータを捏造 */
-        dummy =   ;
+        dummy = r_stdnorm()*sigma+mu;
         printf("%5.2lf\n",dummy);
     }
 
