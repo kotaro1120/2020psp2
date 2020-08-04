@@ -32,9 +32,8 @@ B県の平均と分散を用いて標準化する
 その出現確率を相乗する
 ## 入出力結果
 
-gcc.exe: error: k02.c: No such file or directory
-gcc.exe: fatal error: no input files
-compilation terminated.
+L_A: 0.000000
+L_B: 0.000000
 
 ## 修正履歴
 

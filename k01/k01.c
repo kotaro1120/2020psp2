@@ -3,13 +3,13 @@
 #include <string.h>
 #include <math.h>
 
-extern double ave_online(int n, double val, double ave2);
-extern double var_online(int n, double val, double ave3, double save);
-
+extern double ave_online(double val,double ave, int n);
+extern double var_online(double val, double ave, double square_ave, int n);
+ 
 int main(void)
 {
     int n=0;
-    double val, ave=0, save=0, ave3=0, pm, samplemean, samplevariance, populationmean, populationvariance;
+    double val, ave_new=0, var=0, ave=0, square_ave=0, square_ave_new, ave_bo;
     char fname[FILENAME_MAX];
     char buf[256];
     FILE* fp;
@@ -27,40 +27,35 @@ int main(void)
 
     while(fgets(buf,sizeof(buf),fp) != NULL){
         sscanf(buf,"%lf",&val);
-        n++;
-        ave=ave_online(n, val, ave);
-        samplevariance=var_online(n, val, save, ave3);
-        save=((n-1)*save+val*val)/n;
-        ave3=((n-1)*ave3+val)/n;
-        samplemean=ave;
-     }
+        n=n+1;
+        ave_new=ave_online(val, ave, n);
+        square_ave_new = ave_online(val*val, square_ave, n);
+        var=var_online(val, ave, square_ave, n);
 
-populationvariance=n*samplevariance/(n-1);
-populationmean=samplemean;
-pm=pow(populationvariance/n,0.5);
+        ave = ave_new;
+        square_ave = square_ave_new;
 
+    }
+    ave_bo=n*var/(n-1);
     if(fclose(fp) == EOF){
         fputs("file close error\n",stderr);
         exit(EXIT_FAILURE);
     }
 
-printf("sample mean=%1f\n", samplemean);
-printf("sample variance=%1f\n", samplevariance);
-printf("population mean=%1f, pm=%1f\n", populationmean, pm);
-printf("population variance=%1f\n", populationvariance);
-    
+    printf("sample mean: %lf\n sample variance: %lf\n population mean (estimated): %lf\n population variance (estimated): %lf\n", ave, var, ave, ave_bo);
+
     return 0;
 
 
 }
 
-double ave_online(int n, double val, double ave2)
+double ave_online(double val, double ave, int n)
 {
-    ave2=((n-1)*ave2+val)/n;
-    return ave2;
+    return ((n-1)*ave+val)/n;
 }
 
-double var_online(int n, double val, double save, double ave3)
+double var_online(double val, double ave, double square_ave, int n)
 {
-    return((n-1)*save+val)/n-pow((((n-1)*ave3+val)/n),2);
+    double var=((n-1)*square_ave/n+val*val/n)-pow((n-1)*ave/n+val/n,2);
+    return var;
 }
