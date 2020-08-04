@@ -56,14 +56,15 @@ aa83988848 薗田光太郎
 標準誤差を求める
 
 ## 入出力結果
-
+```
 nput the filename of sample:C:\Users\bb35319028\Desktop\2020psp2\sample\heights_male.csv
 the filename of sample: C:\Users\bb35319028\Desktop\2020psp2\sample\heights_male.csv
 sample mean: 173.888750
  sample variance: 25.361711
  population mean (estimated): 173.888750
  population variance (estimated): 28.984813
-
+```
 ## 修正履歴
 
-説明は「かきくけこ」だ！
+[comment #20200804 sonoda]
+- OKです．課題1完了
