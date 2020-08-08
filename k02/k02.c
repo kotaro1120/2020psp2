@@ -7,7 +7,7 @@ extern double p_stdnorm(double z);
 
 int main(void)
 {
-    double val;
+    double val, syutugen, syutugen_new_a, syutugen_new_b, z, max_val=1, min_val=1, ave_a, var_a, ave_b, var_b;
     char fname[FILENAME_MAX];
     char buf[256];
     FILE* fp;
@@ -26,11 +26,13 @@ int main(void)
 
     while(fgets(buf,sizeof(buf),fp) != NULL){
         sscanf(buf,"%lf",&val);
+z=val;
+syutugen=p_stdnorm(z);
+syutugen_new_a=(syutugen-ave_a)/var_a;
+max_val=max_val*syutugen_new_a;
 
-
-    
-
-
+syutugen_new_b=(syutugen-ave_b)/var_b;
+min_val=min_val*syutugen_new_b;
 
     }
 
