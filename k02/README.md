@@ -32,8 +32,9 @@ B県の平均と分散を用いて標準化する
 その出現確率を相乗する
 ## 入出力結果
 
-L_A: 0.000000
-L_B: 0.000000
+the filename of sample: C:\Users\bb35319028\Desktop\2020psp2\sample\heights_male.csv
+L_A: 0.000006
+L_B: 0.000002
 
 ## 修正履歴
 
