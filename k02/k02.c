@@ -3,53 +3,64 @@
 #include <string.h>
 #include <math.h>
 
+#define AVE_A 170.8 
+#define STDV_A 5.43
+#define AVE_B 169.7
+#define STDV_B 5.5
+
+#define N 256 // OK
+// int N = 256; //NG
+
 extern double p_stdnorm(double z);
 
 int main(void)
 {
-    double val, syutugen, syutugen_new_a, syutugen_new_b, z, max_val=1, min_val=1, ave_a, var_a, ave_b, var_b;
+    double val, syutugen, z, L1 = 1, L2 = 1, ave_a, var_a, ave_b, var_b;
     char fname[FILENAME_MAX];
-    char buf[256];
-    FILE* fp;
-    double L1=1,L2=1;
+    char buf[N];
+    FILE *fp;
+
+    ave_a = AVE_A; var_a = STDV_A*STDV_A;
+    ave_b = AVE_B; var_b = STDV_B*STDV_B; 
 
     printf("input the filename of sample:");
-    fgets(fname,sizeof(fname),stdin);
-    fname[strlen(fname)-1] = '\0';
-    printf("the filename of sample: %s\n",fname);
+    fgets(fname, sizeof(fname), stdin);
+    fname[strlen(fname) - 1] = '\0';
+    printf("the filename of sample: %s\n", fname);
 
-    fp = fopen(fname,"r");
-    if(fp==NULL){
-        fputs("File open error\n",stderr);
+    fp = fopen(fname, "r");
+    if (fp == NULL)
+    {
+        fputs("File open error\n", stderr);
         exit(EXIT_FAILURE);
     }
 
-    while(fgets(buf,sizeof(buf),fp) != NULL){
-        sscanf(buf,"%lf",&val);
-z=val;
-syutugen=p_stdnorm(z);
-syutugen_new_a=(syutugen-ave_a)/var_a;
-max_val=max_val*syutugen_new_a;
+    while (fgets(buf, sizeof(buf), fp) != NULL)
+    {
+        sscanf(buf, "%lf", &val);
+        
+        z = (val-ave_a)/sqrt(var_a);
+        syutugen = p_stdnorm(z);
+        L1 = L1 * syutugen;
 
-syutugen_new_b=(syutugen-ave_b)/var_b;
-min_val=min_val*syutugen_new_b;
-
+        z = (val-ave_b)/sqrt(var_b);
+        syutugen = p_stdnorm(z);
+        L2 = L2 * syutugen;
     }
 
-    if(fclose(fp) == EOF){
-        fputs("file close error\n",stderr);
+    if (fclose(fp) == EOF)
+    {
+        fputs("file close error\n", stderr);
         exit(EXIT_FAILURE);
     }
 
-    printf("L_A: %f\n",max_val);
-    printf("L_B: %f\n",min_val);
+    printf("L_A: %f\n", L1);
+    printf("L_B: %f\n", L2);
 
-    return 0;
-
-
+    return EXIT_SUCCESS;
 }
 
 double p_stdnorm(double z)
 {
-    return 1/sqrt(2*M_PI) * exp(-z*z/2);
+    return 1 / sqrt(2 * M_PI) * exp(-z * z / 2);
 }

@@ -3,10 +3,10 @@
 #include <string.h>
 #include <math.h>
 #ifdef CONST_SEED
-#define RAND_SEED 2020
+  #define RAND_SEED 2020
 #else
-#include <time.h>
-#define RAND_SEED ((unsigned) time(NULL))
+  #include <time.h>
+  #define RAND_SEED ((unsigned) time(NULL))
 #endif
 
 extern double r_unif(void);
@@ -17,24 +17,25 @@ int main(int argc, char* argv[])
     int num_dummy;
     double mu;
     double sigma;
-    int a;
+    int cnt;
     double dummy;
 
 
     printf("============================================\n");
-    scanf(argv[1], "%lf", &mu);
     
+    sscanf(argv[1], "%lf", &mu);
     printf("template mean: %4.1lf\n",mu);
-    scanf(argv{2}, "%lf", &sigma);
-    
+
+    sscanf(argv[2], "%lf", &sigma);
     printf("template standard deviation: %3.2lf\n",sigma);
-    scanf(argv[3], "%d", &num_dummy);
     
+    sscanf(argv[3], "%d", &num_dummy);
     printf("Num of dummy data: %d\n",num_dummy);
+    
     printf("============================================\n");
 
     srand(RAND_SEED);
-    for(a=1; a<=num_dummy; a++){
+    for(cnt=1; cnt<=num_dummy; cnt++){
         /* r_stdnormを使って，1人のデータを捏造 */
         dummy = r_stdnorm()*sigma+mu;
         printf("%5.2lf\n",dummy);

@@ -3,15 +3,17 @@
 #include <string.h>
 #include <stdlib.h>
 
-extern void get_bound(int male, int whole, double* lower, double* upper);
-extern int choose(int n, int r);
-
-struct D(double ID; int gender; double height;);
+struct DATA{
+    int ID; 
+    int gender; 
+    double height;
+};
 
 int main(void)
 {
     int i,n;
-    double val, id, ID;
+    double val;
+    int id, ID;
     char fname[FILENAME_MAX];
     char fname2[FILENAME_MAX];
     char buf[256];
@@ -19,10 +21,8 @@ int main(void)
     FILE*fp, *fp2;
     int male, female, unknown, whole;
     int gender;
-    double bound, bound;
-    struct D date[14];
+    struct DATA date[14];
 
-    i=-1;
     n=0;
 
     printf("input the filename of sample height:");
@@ -53,11 +53,12 @@ int main(void)
 
 male=female=unknown=0;
 
+i=0;
+fgets(buf, sizeof(buf), fp);
 while(fgets(buf, sizeof(buf), fp)!=NULL)
 {
     sscanf(buf, "%d, %lf", &gender, &val);
 
-    i++;
 
     date[i].gender=gender;
     date[i].height=val;
@@ -74,29 +75,39 @@ while(fgets(buf, sizeof(buf), fp)!=NULL)
     {
         unknown++;
     }
+    i++;
+
 }
 
 whole=male+female+unknown;
 
 i=0;
-
-printf("which ID's date do you want? :");
-scanf("%lf", &id);
-printf("---\n");
-
 while(fgets(buf2, sizeof(buf2), fp2)!=NULL)
 {
-    scanf(buf, "%lf", &ID);
-    i+++
+    sscanf(buf2, "%d", &ID);
     date[i].ID=ID;
+    i++;
 
 }
 
-for(i=1, i<=whole; i++)
+
+printf("   ID    | g | height \n");
+for(i=0; i<whole; i++){
+    printf("%8d | %d | %6.2lf\n", date[i].ID, date[i].gender, date[i].height );
+}
+printf("====");
+
+
+
+printf("which ID's date do you want? :");
+scanf("%d", &id);
+printf("---\n");
+
+for(i=0; i<whole; i++)
 {
     if(date[i].ID==id)
     {
-    　　printf("ID:%.0lf\n", date[i].ID);
+        printf("ID:%d\n", date[i].ID);
         printf("gender:");
         if(date[i].gender==1){printf("male\n");}
         else{printf("female\n");}
@@ -112,11 +123,6 @@ if(n==0)
 
 printf("---\n");
 
-printf("=========================\n");
-printf("number of male sample : %d\n", male);
-printf("number of female sample : %d\n", female);
-printf("mele ratio : %lf\n", (double)male/whole);
-
 if(fclose(fp)==EOF)
 {
     fputs("file close error\n", stderr);
@@ -128,11 +134,6 @@ if(fclose(fp2)==EOF)
     fputs("file close error\n", stderr);
     exit(EXIT_FAILURE);
 }
-
-get_bound(male, whole, &bound, &bound);
-
-printf("population male ratio : %lf--%lf\n", bound, bound);
-printf("=============================\n");
 
 return 0;
 
