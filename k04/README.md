@@ -30,7 +30,7 @@ IDのファイルを読み取る
 
 ```
 Input the filename of sample height : ../sample/heights.csv
-Input the filename of sample ID : ../sample/IDs.csv
+Input the filename of sample ID : ../sample/heights.csv
 Which ID's data do you want? : 45313125
 ---
 ID : 45313125
